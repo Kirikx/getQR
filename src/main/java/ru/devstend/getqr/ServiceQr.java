@@ -49,13 +49,15 @@ public class ServiceQr {
   @Value("classpath:icons8-futurama-bender-48.svg")
   private Resource resource;
 
+  private static final Boolean summaryMode = Boolean.FALSE;
+
   private String logo;
 
   private static final int logoW = 48;
   private static final int logoH = 48;
 
-  public static int w = 128;
-  public static int h = 128;
+  private static final int w = 128;
+  private static final int h = 128;
 
   @PostConstruct
   public void init() {
@@ -79,7 +81,7 @@ public class ServiceQr {
     String result = FileUtils.readFileToString(qrCode);
     stopWatch.stop();
 
-//    printTimeSummary(stopWatch, result);
+    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
@@ -101,7 +103,7 @@ public class ServiceQr {
     String result = overlayQrSb(qrSvgString, logo);
     stopWatch.stop();
 
-//    printTimeSummary(stopWatch, result);
+    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
@@ -124,7 +126,7 @@ public class ServiceQr {
     String result = overlayQrSb(qrSvgString, logo);
     stopWatch.stop();
 
-//    printTimeSummary(stopWatch, result);
+    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
@@ -158,7 +160,7 @@ public class ServiceQr {
     String result = documentToString(qrDoc);
     stopWatch.stop();
 
-//    printTimeSummary(stopWatch, result);
+    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
@@ -265,9 +267,11 @@ public class ServiceQr {
   }
 
   private void printTimeSummary(StopWatch stopWatch, String result) {
-    System.out.println("Total time ms: " + stopWatch.getTotalTimeMillis());
-    System.out.println("Total size kb: " + result.getBytes().length / 1000);
-    System.out.println(stopWatch.prettyPrint());
+    if (summaryMode) {
+      System.out.println("Total time ms: " + stopWatch.getTotalTimeMillis());
+      System.out.println("Total size kb: " + result.getBytes().length / 1000);
+      System.out.println(stopWatch.prettyPrint());
+    }
   }
 
   private void saveQr(String result) throws IOException {
