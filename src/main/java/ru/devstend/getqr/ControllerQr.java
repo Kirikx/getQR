@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ControllerQr {
 
-  @Value("classpath:icons8-futurama-bender-48.svg")
-  private Resource resource;
-
   private final ServiceQr serviceQr;
 
   @GetMapping(value = "/servlet/builder")
@@ -38,7 +35,7 @@ public class ControllerQr {
   @GetMapping(value = "/spring/sb", produces = "image/svg+xml")
   public ResponseEntity<?> getQrSpringQRCodeBuilder(@RequestParam("payload") String payload) throws Exception {
 
-    String qr = serviceQr.createQrSb(payload, asString(resource), 48, 48);
+    String qr = serviceQr.createQrSb(payload);
 
     return ResponseEntity.ok(qr.getBytes(UTF_8));
   }
@@ -46,7 +43,7 @@ public class ControllerQr {
   @GetMapping(value = "/spring/doc", produces = "image/svg+xml")
   public ResponseEntity<?> getQrSpringDoc(@RequestParam("payload") String payload) throws Exception {
 
-    String qr = serviceQr.createQrDoc(payload, asString(resource), 48, 48);
+    String qr = serviceQr.createQrDoc(payload);
 
     return ResponseEntity.ok(qr.getBytes(UTF_8));
   }
@@ -54,17 +51,9 @@ public class ControllerQr {
   @GetMapping(value = "/spring/graphics", produces = "image/svg+xml")
   public ResponseEntity<?> getQrSpring(@RequestParam("payload") String payload) throws Exception {
 
-    String qr = serviceQr.createQrGraphics(payload, asString(resource), 48, 48);
+    String qr = serviceQr.createQrGraphics(payload);
 
     return ResponseEntity.ok(qr.getBytes(UTF_8));
-  }
-
-  public static String asString(Resource resource) {
-    try (Reader reader = new InputStreamReader(resource.getInputStream(), UTF_8)) {
-      return FileCopyUtils.copyToString(reader);
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
   }
 
 }

@@ -13,13 +13,17 @@ import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
@@ -30,7 +34,10 @@ import javax.xml.transform.stream.StreamResult;
 import net.glxn.qrgen.javase.QRCode;
 import org.apache.commons.io.FileUtils;
 import org.jfree.graphics2d.svg.SVGGraphics2D;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StopWatch;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -39,8 +46,21 @@ import org.xml.sax.SAXException;
 @Service
 public class ServiceQr {
 
+  @Value("classpath:icons8-futurama-bender-48.svg")
+  private Resource resource;
+
+  private String logo;
+
+  private static final int logoW = 48;
+  private static final int logoH = 48;
+
   public static int w = 128;
   public static int h = 128;
+
+  @PostConstruct
+  public void init() {
+    logo = asString(resource);
+  }
 
   public String generateQRCodeSvg(String payload) throws Exception {
 
@@ -59,13 +79,13 @@ public class ServiceQr {
     String result = FileUtils.readFileToString(qrCode);
     stopWatch.stop();
 
-    printTimeSummary(stopWatch, result);
+//    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
   }
 
-  public String createQrSb(String qrPayload, String logo, int logoW, int logoH) throws Exception {
+  public String createQrSb(String qrPayload) throws Exception {
 
     StopWatch stopWatch = new StopWatch();
 
@@ -81,13 +101,13 @@ public class ServiceQr {
     String result = overlayQrSb(qrSvgString, logo);
     stopWatch.stop();
 
-    printTimeSummary(stopWatch, result);
+//    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
   }
 
-  public String createQrGraphics(String qrPayload, String logo, int logoW, int logoH)
+  public String createQrGraphics(String qrPayload)
       throws Exception {
 
     StopWatch stopWatch = new StopWatch();
@@ -104,13 +124,13 @@ public class ServiceQr {
     String result = overlayQrSb(qrSvgString, logo);
     stopWatch.stop();
 
-    printTimeSummary(stopWatch, result);
+//    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
   }
 
-  public String createQrDoc(String qrPayload, String logo, int logoW, int logoH) throws Exception {
+  public String createQrDoc(String qrPayload) throws Exception {
 
     StopWatch stopWatch = new StopWatch();
 
@@ -138,7 +158,7 @@ public class ServiceQr {
     String result = documentToString(qrDoc);
     stopWatch.stop();
 
-    printTimeSummary(stopWatch, result);
+//    printTimeSummary(stopWatch, result);
     saveQr(result);
 
     return result;
@@ -255,5 +275,13 @@ public class ServiceQr {
         new ByteArrayInputStream(result.getBytes(UTF_8)),
         Paths.get("qrcode.svg"),
         StandardCopyOption.REPLACE_EXISTING);
+  }
+
+  public static String asString(Resource resource) {
+    try (Reader reader = new InputStreamReader(resource.getInputStream(), UTF_8)) {
+      return FileCopyUtils.copyToString(reader);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 }
