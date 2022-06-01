@@ -49,7 +49,7 @@ public class ServiceQr {
   @Value("classpath:icons8-futurama-bender-48.svg")
   private Resource resource;
 
-  private static final Boolean summaryMode = Boolean.FALSE;
+  private static final Boolean summaryMode = Boolean.FALSE; // TODO: Set TRUE if need view symmary
 
   private String logo;
 
@@ -190,8 +190,8 @@ public class ServiceQr {
     sb.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\"")
         .append(" height=\"").append(height).append("px\"")
         .append(" width=\"").append(width).append("px\"")
-        .append(" viewBox=\"0 0 ")
-        .append(width).append(" ").append(height).append("\" stroke=\"none\">\n");
+//        .append(" viewBox=\"0 0 ").append(width).append(" ").append(height).append("\"")
+        .append(" stroke=\"none\">\n");
     sb.append("<style type=\"text/css\">\n");
     sb.append(".black {fill:#000000;}\n");
     sb.append("</style>\n");
