@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "de2608c1-8370-4a78-ac33-fdf331f4e823",
+		"name": "QR_TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12446875"
+	},
+	"item": [
+		{
+			"name": "BUILDER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/servlet/builder?payload=http://example.org/foo/bar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"servlet",
+						"builder"
+					],
+					"query": [
+						{
+							"key": "payload",
+							"value": "http://example.org/foo/bar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "STRING_BUILDER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/spring/sb?payload=http://example.org/foo/bar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"sb"
+					],
+					"query": [
+						{
+							"key": "payload",
+							"value": "http://example.org/foo/bar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DOC_BUILDER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/spring/doc?payload=http://example.org/foo/bar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"doc"
+					],
+					"query": [
+						{
+							"key": "payload",
+							"value": "http://example.org/foo/bar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GRAPHICS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/spring/graphics?payload=http://example.org/foo/bar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"spring",
+						"graphics"
+					],
+					"query": [
+						{
+							"key": "payload",
+							"value": "http://example.org/foo/bar"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
