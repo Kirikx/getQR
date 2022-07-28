@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-//    id "me.champeau.jmh" version "0.6.6"
+    id "me.champeau.jmh" version "0.6.6"
 }
 
 group = 'ru.devstend'
@@ -29,17 +29,27 @@ dependencies {
     // SVGGraphics2D
     implementation 'org.jfree:jfreesvg:3.4.2'
 
-    // benchmark
-    testImplementation 'org.openjdk.jmh:jmh-core:1.35'
-    testImplementation 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
+    // benchmark settings (for run in test classes)
+//    testImplementation 'org.openjdk.jmh:jmh-core:1.35'
+//    implementation 'org.openjdk.jmh:jmh-core:1.35'
     // this is the line that solves the missing /META-INF/BenchmarkList error
-    testAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
+//    testAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
+//    annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
 
     // Utils
     implementation 'com.google.guava:guava:31.1-jre'
-    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    jmhCompileOnly 'org.projectlombok:lombok'
+    jmhAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+jmh {
+    warmupIterations = 1
+    iterations = 1
+    fork = 0
+    threads = 1
 }
 
 tasks.named('test') {

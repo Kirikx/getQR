@@ -1,21 +1,15 @@
-package ru.devstend.getqr;
+package ru.devstend.getqr.controller;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.google.common.net.HttpHeaders;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UncheckedIOException;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.devstend.getqr.service.ServiceQr;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +18,8 @@ public class ControllerQr {
   private final ServiceQr serviceQr;
 
   @GetMapping(value = "/servlet/builder")
-  public void getQrServlet(HttpServletResponse response, @RequestParam("payload") String payload) throws Exception {
+  public void getQrServlet(HttpServletResponse response, @RequestParam("payload") String payload)
+      throws Exception {
 
     String qr = serviceQr.generateQRCodeSvg(payload);
 
@@ -33,7 +28,8 @@ public class ControllerQr {
   }
 
   @GetMapping(value = "/spring/sb", produces = "image/svg+xml")
-  public ResponseEntity<?> getQrSpringQRCodeBuilder(@RequestParam("payload") String payload) throws Exception {
+  public ResponseEntity<?> getQrSpringQRCodeBuilder(@RequestParam("payload") String payload)
+      throws Exception {
 
     String qr = serviceQr.createQrSb(payload);
 
@@ -41,7 +37,8 @@ public class ControllerQr {
   }
 
   @GetMapping(value = "/spring/doc", produces = "image/svg+xml")
-  public ResponseEntity<?> getQrSpringDoc(@RequestParam("payload") String payload) throws Exception {
+  public ResponseEntity<?> getQrSpringDoc(@RequestParam("payload") String payload)
+      throws Exception {
 
     String qr = serviceQr.createQrDoc(payload);
 

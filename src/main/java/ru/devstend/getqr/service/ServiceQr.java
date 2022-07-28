@@ -1,4 +1,4 @@
-package ru.devstend.getqr;
+package ru.devstend.getqr.service;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -35,6 +35,7 @@ import net.glxn.qrgen.javase.QRCode;
 import org.apache.commons.io.FileUtils;
 import org.jfree.graphics2d.svg.SVGGraphics2D;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -46,16 +47,17 @@ import org.xml.sax.SAXException;
 @Service
 public class ServiceQr {
 
+  private static final Boolean summaryMode = Boolean.FALSE; // TODO: Set TRUE if need print summary
+  private static final Boolean needSave = Boolean.FALSE; // TODO: Set TRUE if need saving QR as file
+
+  // Logo settings
   @Value("classpath:icons8-futurama-bender-48.svg")
   private Resource resource;
-
-  private static final Boolean summaryMode = Boolean.FALSE; // TODO: Set TRUE if need view symmary
-
   private String logo;
-
   private static final int logoW = 48;
   private static final int logoH = 48;
 
+  // QR size settings
   private static final int w = 128;
   private static final int h = 128;
 
@@ -275,10 +277,12 @@ public class ServiceQr {
   }
 
   private void saveQr(String result) throws IOException {
-    Files.copy(
-        new ByteArrayInputStream(result.getBytes(UTF_8)),
-        Paths.get("qrcode.svg"),
-        StandardCopyOption.REPLACE_EXISTING);
+    if (needSave) {
+      Files.copy(
+          new ByteArrayInputStream(result.getBytes(UTF_8)),
+          Paths.get("qrcode.svg"),
+          StandardCopyOption.REPLACE_EXISTING);
+    }
   }
 
   public static String asString(Resource resource) {
