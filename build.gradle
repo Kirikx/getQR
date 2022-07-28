@@ -36,6 +36,10 @@ dependencies {
 //    testAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
 //    annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
 
+    // k8s manifest generator
+    annotationProcessor 'io.dekorate:kubernetes-annotations:2.11.1'
+    implementation 'io.dekorate:kubernetes-spring-starter:2.11.1'
+
     // Utils
     implementation 'com.google.guava:guava:31.1-jre'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
