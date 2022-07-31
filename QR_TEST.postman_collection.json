@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/servlet/builder?payload=http://example.org/foo/bar",
+					"raw": "http://localhost:9000/servlet/builder?payload=http://example.org/foo/bar",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -38,7 +38,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/spring/sb?payload=http://example.org/foo/bar",
+					"raw": "http://localhost:9000/spring/sb?payload=http://example.org/foo/bar",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -64,7 +64,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/spring/doc?payload=http://example.org/foo/bar",
+					"raw": "http://localhost:9000/spring/doc?payload=http://example.org/foo/bar",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -90,7 +90,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/spring/graphics?payload=http://example.org/foo/bar",
+					"raw": "http://localhost:9000/spring/graphics?payload=http://example.org/foo/bar",
 					"protocol": "http",
 					"host": [
 						"localhost"
