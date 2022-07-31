@@ -32,12 +32,21 @@ public class QrServiceImpl implements QrService {
 
   @Override
   public String getQr(String payload, QrCreationMethodEnum method, String logoName) {
+    log.info(
+        "Try create QR with logo by payload: {}, method: {}, logoName: {}",
+        payload,
+        method,
+        logoName
+    );
 
     QrContextDto qrContextDto = buildQrContext(payload, logoName);
 
-    return Optional.ofNullable(qrCreators.get(method))
+    String creatingQr = Optional.ofNullable(qrCreators.get(method))
         .map(qrCreator -> qrCreator.createQr(qrContextDto))
         .orElseThrow(() -> new ApplicationException("Creating method not found"));
+
+    log.info("QR created");
+    return creatingQr;
   }
 
   @Override
@@ -52,6 +61,8 @@ public class QrServiceImpl implements QrService {
     return QrContextDto.builder()
         .payload(payload)
         .logo(logo)
+//        .width(256)
+//        .height(256)
         .build();
   }
 

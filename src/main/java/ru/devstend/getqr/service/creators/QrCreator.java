@@ -13,6 +13,9 @@ import ru.devstend.getqr.enums.QrCreationMethodEnum;
 
 public interface QrCreator {
 
+  boolean SAVE_MODE = false;
+  boolean REPORT_MODE = false;
+
   /**
    * Creator name
    *
@@ -31,28 +34,34 @@ public interface QrCreator {
   /**
    * Implement class logger
    *
-   * @return Logger
+   * @return Implement class Logger
    */
   Logger getLogger();
 
   default void saveQr(String result){
-    try {
-      Files.copy(
-          new ByteArrayInputStream(result.getBytes(UTF_8)),
-          Paths.get("qrcode.svg"),
-          StandardCopyOption.REPLACE_EXISTING);
-    } catch (Exception ex) {
-      // pass
+    if (SAVE_MODE) {
+      try {
+        Files.copy(
+            new ByteArrayInputStream(result.getBytes(UTF_8)),
+            Paths.get("qrcode.svg"),
+            StandardCopyOption.REPLACE_EXISTING);
+      } catch (Exception ex) {
+        // pass
+      }
     }
   }
 
   default void printTimeSummary(StopWatch stopWatch, String result) {
-    Logger logger = getLogger();
-    String report = stopWatch.prettyPrint();
-    logger.info(getName().name());
-    logger.info("Total time ms: {}", stopWatch.getTotalTimeMillis());
-    logger.info("Total size kb: {}", result.getBytes().length / 1000);
-    logger.info(report);
+    if (REPORT_MODE) {
+      Logger logger = getLogger();
+      String report = stopWatch.prettyPrint();
+      String creatorName = getName().name();
+
+      logger.info(creatorName);
+      logger.info("Total time ms: {}", stopWatch.getTotalTimeMillis());
+      logger.info("Total size kb: {}", result.getBytes().length / 1000);
+      logger.info(report);
+    }
   }
 
 }

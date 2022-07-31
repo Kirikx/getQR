@@ -15,6 +15,7 @@ public interface BitMatrixService {
   BitMatrix createBitMatrix(String payload, int width, int height);
 
   /**
+   * Convert bit matrix to SVG string
    *
    * @param bitMatrix QR bit matrix
    * @return SVG string

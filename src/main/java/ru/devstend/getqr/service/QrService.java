@@ -15,6 +15,13 @@ public interface QrService {
    */
   String getQr(String payload, QrCreationMethodEnum method, @Nullable String logoName);
 
+  /**
+   * Create QR by method from payload with default logo
+   *
+   * @param payload payload
+   * @param method creation method
+   * @return QR with default logo
+   */
   String getQrWithDefaultLogo(String payload, QrCreationMethodEnum method);
 
 }
