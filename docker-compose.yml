@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  app:
+    image: "${DEV_IMAGE:-devstend/get-qr:local}"
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "9000:8080"
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: "dev"
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: 0.5
+    entrypoint:
+      - java
+      - -server
+      - -XX:+AlwaysActAsServerClassMachine
+      - -XX:NativeMemoryTracking=summary
+#      - -Djava.awt.headless=true
+      - org.springframework.boot.loader.JarLauncher
+    networks:
+      monitoring:
+        aliases:
+          - app
+
+  grafana:
+    build: 'monitoring/config/grafana'
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      monitoring:
+        aliases:
+          - grafana
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/prometheus:/prometheus
+    networks:
+      monitoring:
+        aliases:
+          - prometheus
+
+networks:
+  monitoring:

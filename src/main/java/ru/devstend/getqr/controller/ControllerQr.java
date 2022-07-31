@@ -34,7 +34,7 @@ public class ControllerQr {
   }
 
   @GetMapping(value = "/spring/sb", produces = "image/svg+xml")
-  public ResponseEntity<?> getQrSpringQRCodeBuilder(@RequestParam("payload") String payload) {
+  public ResponseEntity<byte[]> getQrSpringQRCodeBuilder(@RequestParam("payload") String payload) {
 
     String qr = qrService.getQrWithDefaultLogo(payload, QrCreationMethodEnum.STRING_BUILDER);
 
@@ -42,7 +42,7 @@ public class ControllerQr {
   }
 
   @GetMapping(value = "/spring/doc", produces = "image/svg+xml")
-  public ResponseEntity<?> getQrSpringDoc(@RequestParam("payload") String payload) {
+  public ResponseEntity<byte[]> getQrSpringDoc(@RequestParam("payload") String payload) {
 
     String qr = qrService.getQrWithDefaultLogo(payload, QrCreationMethodEnum.DOCUMENT);
 
@@ -50,7 +50,7 @@ public class ControllerQr {
   }
 
   @GetMapping(value = "/spring/graphics", produces = "image/svg+xml")
-  public ResponseEntity<?> getQrSpring(@RequestParam("payload") String payload) {
+  public ResponseEntity<byte[]> getQrSpring(@RequestParam("payload") String payload) {
 
     String qr = qrService.getQrWithDefaultLogo(payload, QrCreationMethodEnum.SVG_GRAPHICS);
 

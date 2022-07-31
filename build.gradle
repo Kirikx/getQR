@@ -1,13 +1,13 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.0'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$dependensyManagementVersion"
     id 'java'
-    id "me.champeau.jmh" version "0.6.6"
+    id "me.champeau.jmh" version "$jmhPluginVersion"
 }
 
-group = 'ru.devstend'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+group = "$packageGroup"
+version = "$projectVersion"
+sourceCompatibility = "$projectJavaVersion"
 
 repositories {
     mavenCentral()
@@ -16,32 +16,49 @@ repositories {
     }
 }
 
+jar {
+    enabled = false
+}
+
+bootJar {
+    archiveFileName = project.name + ".jar"
+}
+
 dependencies {
-    // web
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Web
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+
+    // Monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // builder
+    implementation "com.github.kenglxn.qrgen:javase:$qrgenVresion"
+    // bit matrix
+    implementation "com.google.zxing:javase:$zxingVersion"
+    // SVGGraphics2D
+    implementation "org.jfree:jfreesvg:$jfreesvgVersion"
+
+    // benchmark settings (for run in test classes)
+//    testImplementation "org.openjdk.jmh:jmh-core:$jmhVersion"
+//    implementation "org.openjdk.jmh:jmh-core:$jmhVersion"
+    // this is the line that solves the missing /META-INF/BenchmarkList error
+//    testAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:$jmhVersion"
+//    annotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:$jmhVersion"
+
+    // k8s manifest generator
+    annotationProcessor "io.dekorate:kubernetes-annotations:$decorateVersion"
+    implementation "io.dekorate:kubernetes-spring-starter:$decorateVersion"
+
+    // Test
     implementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    implementation 'com.github.kenglxn.qrgen:javase:2.6.0'
-
-    implementation 'com.google.zxing:javase:3.5.0'
-
-    // SVGGraphics2D
-    implementation 'org.jfree:jfreesvg:3.4.2'
-
-    // benchmark settings (for run in test classes)
-//    testImplementation 'org.openjdk.jmh:jmh-core:1.35'
-//    implementation 'org.openjdk.jmh:jmh-core:1.35'
-    // this is the line that solves the missing /META-INF/BenchmarkList error
-//    testAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
-//    annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
-
-    // k8s manifest generator
-    annotationProcessor 'io.dekorate:kubernetes-annotations:2.11.1'
-    implementation 'io.dekorate:kubernetes-spring-starter:2.11.1'
-
     // Utils
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation "com.google.guava:guava:$guavaVersion"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

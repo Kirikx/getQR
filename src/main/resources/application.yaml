@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    banner-mode: off
+
+management:
+  server:
+    port: 8082
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info,metric
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true

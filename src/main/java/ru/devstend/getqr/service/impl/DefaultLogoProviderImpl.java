@@ -22,7 +22,7 @@ public class DefaultLogoProviderImpl implements LogoProvider {
   // QR size settings
   private static final int DEFAULT_WIDTH = 48;
   private static final int DEFAULT_HEIGHT = 48;
-  @Value("classpath:icons8-futurama-bender-48.svg")
+  @Value("classpath:store/icons8-futurama-bender-48.svg")
   private Resource resource;
   private String defaultLogo;
 
