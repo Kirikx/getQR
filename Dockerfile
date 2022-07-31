@@ -10,7 +10,7 @@ COPY --from=builder extract/dependencies/ $APP_HOME/
 COPY --from=builder extract/spring-boot-loader/ $APP_HOME/
 COPY --from=builder extract/snapshot-dependencies/ $APP_HOME/
 COPY --from=builder extract/application/ $APP_HOME/
-RUN #apt-get update && apt-get install -y libfreetype6
+#RUN apt-get update && apt-get install -y libfreetype6
 
 EXPOSE 8080
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
