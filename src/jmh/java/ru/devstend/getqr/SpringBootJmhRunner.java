@@ -13,7 +13,8 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.infra.Blackhole;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import ru.devstend.getqr.service.ServiceQr;
+import ru.devstend.getqr.enums.QrCreationMethodEnum;
+import ru.devstend.getqr.service.QrService;
 
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)
@@ -30,15 +31,15 @@ public class SpringBootJmhRunner {
       "SAMSUNG");
 
   private ConfigurableApplicationContext context;
-  private ServiceQr serviceQr;
+  private QrService qrService;
 
   @Setup(Level.Trial)
   public void setUp() {
 
     context = SpringApplication.run(GetQrApplication.class);
 
-    serviceQr = context
-        .getBean(ServiceQr.class);
+    qrService = context
+        .getBean(QrService.class);
   }
 
   @TearDown(Level.Trial)
@@ -47,10 +48,10 @@ public class SpringBootJmhRunner {
   }
 
 
-  @Benchmark
+  //  @Benchmark
   public void testConcatenatePlus(Blackhole bh) {
 
-  String result = CONSTANTS.getOne() + " " +
+    String result = CONSTANTS.getOne() + " " +
         CONSTANTS.getTwo() + " " +
         CONSTANTS.getTree() + " " +
         CONSTANTS.getFour() + " " +
@@ -60,7 +61,7 @@ public class SpringBootJmhRunner {
     bh.consume(result);
   }
 
-  @Benchmark
+  //  @Benchmark
   public void testStringBuilder(Blackhole bh) {
 
     StringBuilder stringBuilder = new StringBuilder();
@@ -82,7 +83,7 @@ public class SpringBootJmhRunner {
     bh.consume(result);
   }
 
-  @Benchmark
+  //  @Benchmark
   public void testStringBuffer(Blackhole bh) {
 
     StringBuffer stringBuffer = new StringBuffer();
@@ -104,7 +105,7 @@ public class SpringBootJmhRunner {
     bh.consume(result);
   }
 
-  @Benchmark
+  //  @Benchmark
   public void testConcatenate(Blackhole bh) {
 
     String result = CONSTANTS.getOne()
@@ -122,35 +123,35 @@ public class SpringBootJmhRunner {
     bh.consume(result);
   }
 
-//  @Benchmark
-  public void testBuilderVariant(Blackhole bh) throws Exception {
+  @Benchmark
+  public void testBuilderVariant(Blackhole bh) {
 
     bh.consume(
-        serviceQr.generateQRCodeSvg(TEST_PAYLOAD)
+        qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.KENGLXN_BUILDER)
     );
   }
 
-//  @Benchmark
-  public void testGraphicsVariant(Blackhole bh) throws Exception {
+  @Benchmark
+  public void testGraphicsVariant(Blackhole bh) {
 
     bh.consume(
-        serviceQr.createQrGraphics(TEST_PAYLOAD)
+        qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.SVG_GRAPHICS)
     );
   }
 
-//  @Benchmark
-  public void testDocVariant(Blackhole bh) throws Exception {
+  @Benchmark
+  public void testDocVariant(Blackhole bh) {
 
     bh.consume(
-        serviceQr.createQrDoc(TEST_PAYLOAD)
+        qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.DOCUMENT)
     );
   }
 
-//  @Benchmark
-  public void testStringBuilderVariant(Blackhole bh) throws Exception {
+  @Benchmark
+  public void testStringBuilderVariant(Blackhole bh) {
 
     bh.consume(
-        serviceQr.createQrSb(TEST_PAYLOAD)
+        qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.STRING_BUILDER)
     );
   }
 

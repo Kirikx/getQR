@@ -11,6 +11,8 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.context.junit4.SpringRunner;
+//import ru.devstend.getqr.enums.QrCreationMethodEnum;
+//import ru.devstend.getqr.service.QrService;
 //
 //@SpringBootTest
 //@RunWith(SpringRunner.class)
@@ -21,30 +23,30 @@
 //
 //  public static final String TEST_PAYLOAD = "http://example.org/path/foobar";
 //
-//  private static ServiceQr serviceQr;
+//  private static QrService qrService;
 //
 //  @Autowired
-//  public void setServiceQr(ServiceQr serviceQr) {
-//    GetQrApplicationTests.serviceQr = serviceQr;
+//  public void setServiceQr(QrService qrService) {
+//    GetQrApplicationTests.qrService = qrService;
 //  }
 //
 //  @Benchmark
-//  public void qrBuilderTest() throws Exception {
-//    serviceQr.generateQRCodeSvg(TEST_PAYLOAD);
+//  public void qrBuilderTest() {
+//    qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.KENGLXN_BUILDER);
 //  }
 //
 //  @Benchmark
-//  public void qrGraphicsTest() throws Exception {
-//    serviceQr.createQrGraphics(TEST_PAYLOAD);
+//  public void qrGraphicsTest() {
+//    qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.SVG_GRAPHICS);
 //  }
 //
 //  @Benchmark
-//  public void qrDocTest() throws Exception {
-//    serviceQr.createQrDoc(TEST_PAYLOAD);
+//  public void qrDocTest() {
+//    qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.DOCUMENT);
 //  }
 //
 //  @Benchmark
-//  public void qrSbTest() throws Exception {
-//    serviceQr.createQrSb(TEST_PAYLOAD);
+//  public void qrSbTest() {
+//    qrService.getQrWithDefaultLogo(TEST_PAYLOAD, QrCreationMethodEnum.STRING_BUILDER);
 //  }
 //}
