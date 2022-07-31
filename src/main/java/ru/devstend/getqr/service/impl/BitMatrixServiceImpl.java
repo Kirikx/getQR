@@ -45,6 +45,7 @@ public class BitMatrixServiceImpl implements BitMatrixService {
 
   @Override
   public String convertBitMatrixToSvgString(BitMatrix bitMatrix) {
+
     return converter.convert(bitMatrix);
   }
 }
