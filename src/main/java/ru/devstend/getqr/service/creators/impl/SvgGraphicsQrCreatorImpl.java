@@ -16,7 +16,7 @@ import ru.devstend.getqr.service.BitMatrixService;
 import ru.devstend.getqr.service.LogoOverlayService;
 import ru.devstend.getqr.service.creators.QrCreator;
 
-@Slf4j
+@Slf4j(topic = "SvgGraphicsQrCreator")
 @Service
 @RequiredArgsConstructor
 public class SvgGraphicsQrCreatorImpl implements QrCreator {
